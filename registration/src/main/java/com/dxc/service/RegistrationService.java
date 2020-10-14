@@ -17,12 +17,12 @@ public class RegistrationService {
 		return repo.save(user);
 		
 	}
-	public User fetchUserByEmailId(String email) {
-		return repo.findByEmailId(email);
+	public User fetchUserByUserName(String userName) {
+		return repo.findByUserName(userName);
 	}
 	
-	public User fetchUserByEmailIdAndPassword(String email, String password) {
-		return repo.findByEmailIdAndPassword(email, password);
+	public User fetchUserByUserNameAndPassword(String username, String password) {
+		return repo.findByUserNameAndPassword(username, password);
 	}
 
 }

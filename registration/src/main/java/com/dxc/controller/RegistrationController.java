@@ -1,6 +1,7 @@
 package com.dxc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,15 +15,17 @@ import com.dxc.service.RegistrationService;
 public class RegistrationController {
 
 	@Autowired
-	private RegistrationService service;
-
-	@PostMapping("/registeruser")
+	 RegistrationService service;
+	@CrossOrigin(origins="http://localhost:4200")
+	@PostMapping("registeruser")
+	
+	
 	public User registerUser(@RequestBody User user) throws Exception {
-		String tempEmailId = user.getEmailId();
-		if (tempEmailId != null && !"".equals(tempEmailId)) {
-			User userobj = service.fetchUserByEmailId(tempEmailId);
+		String tempUserName = user.getUserName();
+		if (tempUserName != null && !"".equals(tempUserName)) {
+			User userobj = service.fetchUserByUserName(tempUserName);
 			if (userobj != null) {
-				throw new Exception("user with " + tempEmailId + " is already exist");
+				throw new Exception("user with " + tempUserName + " is already exist");
 			}
 
 		}
@@ -32,14 +35,15 @@ public class RegistrationController {
 		return userObj;
 
 	}
-	
+	@CrossOrigin(origins="http://localhost:4200")
 	@PostMapping("login")
+	
 	public User loginUser(@RequestBody User user) throws Exception {
-		String tempEmailId = user.getEmailId();
+		String tempUserName = user.getUserName();
 		String tempPass= user.getPassword();
 		User userObj = null;
-		if(tempEmailId != null && tempPass != null) {
-			userObj =service.fetchUserByEmailIdAndPassword(tempEmailId, tempPass);
+		if(tempUserName != null && tempPass != null) {
+			userObj =service.fetchUserByUserNameAndPassword(tempUserName, tempPass);
 		}
 		if(userObj==null) {
 			throw new Exception("bad credentials");
